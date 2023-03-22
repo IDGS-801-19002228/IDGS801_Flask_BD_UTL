@@ -1,0 +1,63 @@
+{% extends "layout.html" %} 
+ 
+ {% block content%}
+   {%from "_macros.html" import render_field%}
+ 
+   <div class="container">
+    <div class="">
+        <form name="sent" action="/insertarM" id="form1" method="POST">
+            <div class="row control-group">
+                <div class="form-group col-xs-12 float-label-form-group controls">
+                    {{render_field(form.nombre,class='form-control')}}
+                </div>
+            </div>
+            <div class="row control-group">
+                <div class="form-group col-xs-12 float-label-form-group controls">
+                    {{render_field(form.apellidos,class='form-control')}}
+                </div>
+            </div>
+            <div class="row control-group">
+                <div class="form-group col-xs-12 float-label-form-group controls">
+                    {{render_field(form.email,class='form-control')}}
+                </div>
+            </div>
+            <div class="row control-group">
+                <div class="form-group col-xs-12 float-label-form-group controls">
+                    {{render_field(form.tel,class='form-control')}}
+                </div>
+            </div>
+            <input type="hidden" name="csrf_token" value="{{csrf_token()}}"/>
+            <input type="submit" id="reg-alum" class="btn btn-primary" name="registra" value="Registrar"/>
+        </form>
+    </div>
+
+   <h2>Maestros</h2>
+    <table class="table table-stripped table-bordered">
+        <thead >
+            <tr class="tr-head">
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Correo</th>
+                <th>Telefono</th>
+                <th>Eliminar</th>
+                <th>Modificar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for res in result%}
+                <tr>
+                    <td>{{res[1]}}</td>
+                    <td>{{res[2]}}</td>
+                    <td>{{res[3]}}</td>
+                    <td>{{res[4]}}</td>
+                    <td><a href="eliminarM?id={{res[0]}}" 
+                        class="btn btn-danger"><i class="icon-remove icon-white"></i>Eliminar</a></td>
+                    <td><a href="modificarM?id={{res[0]}}" 
+                        class="btn btn-warning"><i class="icon-pencil icon-white"></i>Modificar</a></td>
+                </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+   </div>
+ 
+{% endblock %}
